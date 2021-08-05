@@ -10,9 +10,12 @@ var capSelect = false;
 var specialSelect = false;
 var numberSelect = false;
 
-var generateBtn = document.querySelector("#generate");
 
-function generate() {
+
+var generateBtn = document.querySelector("#generate");
+generateBtn.addEventListener("click", generatepassword);
+
+function generatepassword() {
   var confirmLength = '';
   while (isNaN(confirmLength) || confirmLength <8 || confirmLength > 128) {
     confirmLength = prompt("How long would you like your password to be? (Must be between 8-128)");
@@ -44,14 +47,23 @@ function generate() {
   }
 
   var characters = '';
-  characters += (letterSelect ? lower : '');
-  characters += (capSelect ? upper : '');
-  characters += (specialSelect ? special : '');
-  characters += (numberSelect ? number : '');
+  characters += (letterSelect ? letters : '');
+  characters += (capSelect ? capLetters : '');
+  characters += (specialSelect ? specialChar : '');
+  characters += (numberSelect ? numbers : '');
 
   pwd = password(confirmLength, characters);
 
-  
+  document.getElementById("password").innerHTML = pwd;
+}
+
+function password(l, characters) {
+  var pwd = '';
+  for (let i = 0; i < l; i++) {
+    pwd += characters.charAt(Math.floor(Math.random() * characters.length));
+  }
+  return pwd;
+
 }
 
 
